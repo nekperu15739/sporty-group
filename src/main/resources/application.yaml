@@ -40,4 +40,5 @@ rocketmq:
 logging:
   level:
     root: info
+    com.sportygroup.bets: debug
     org.apache.rocketmq.spring.core: debug

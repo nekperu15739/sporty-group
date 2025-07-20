@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
+import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -49,6 +50,8 @@ class SportEventControllerIT {
             .andExpect(jsonPath("$.id").value(resource.getId().toString()))
             .andExpect(jsonPath("$.name").value(resource.getName()))
             .andExpect(jsonPath("$.winnerId").value(resource.getWinnerId().toString()));
+
+        verify(addUseCase).addNewSportEvent(any(SportEventResource.class));
     }
 
     private SportEventResource buildResource() {

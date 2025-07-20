@@ -4,6 +4,8 @@ import com.github.javafaker.Faker;
 import com.sportygroup.bets.api.SportEventResource;
 import com.sportygroup.bets.persistence.BetEntity;
 import com.sportygroup.bets.persistence.BetRepository;
+import com.sportygroup.bets.service.domain.Bet;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +15,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.sportygroup.bets.config.TopicConstant.BET_SETTLEMENTS_TOPIC;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,6 +31,9 @@ class InteractorCheckBetsUseCaseTest {
     @Mock
     private BetRepository repository;
 
+    @Mock
+    private RocketMQTemplate rocketMQTemplate;
+
     @InjectMocks
     private InteractorCheckBetsUseCase useCase;
 
@@ -35,6 +44,8 @@ class InteractorCheckBetsUseCaseTest {
 
         when(repository.findBetEntitiesByEventIdAndEventWinnerId(eventResource.getId(), eventResource.getWinnerId()))
                 .thenReturn(Set.of(betEntity));
+
+        doNothing().when(rocketMQTemplate).convertAndSend(eq(BET_SETTLEMENTS_TOPIC), any(Bet.class));
 
         useCase.lookBetForWinners(eventResource);
 

@@ -28,6 +28,14 @@ curl -X POST --location "http://127.0.0.1:8080/sport-event" \
         }'
 ```
 
+You could check Persistence on:
+http://localhost:8080/h2-console/
+
+Credentials are on application.yaml file
+
+
+![alt text](persistence.png "Title")
+
 ## Troubleshooting
 ### Spring Boot 3.x.x and RocketMQ
 There were an issue with the RocketMQ consumer not being able to consume messages.

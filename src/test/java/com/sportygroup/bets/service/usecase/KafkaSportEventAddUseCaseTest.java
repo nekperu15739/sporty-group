@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import static com.sportygroup.bets.config.TopicConstant.EVENT_OUTCOMES;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
@@ -26,7 +27,8 @@ class KafkaSportEventAddUseCaseTest {
     void addNewSportEvent() {
         var eventToSent = Mockito.mock(SportEventResource.class);
 
-        kafkaSportEventAddUseCase.addNewSportEvent(eventToSent);
+        assertThatCode(() -> kafkaSportEventAddUseCase.addNewSportEvent(eventToSent))
+            .doesNotThrowAnyException();
 
         verify(template).send(eq(EVENT_OUTCOMES), eq(eventToSent));
     }

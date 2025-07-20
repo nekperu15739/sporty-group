@@ -16,7 +16,7 @@ import java.util.UUID;
 public class BetEntity implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 3129552279180365225L;
+    private static final long serialVersionUID = -1041811642909433776L;
 
     @Id
     private UUID betId;
@@ -28,6 +28,17 @@ public class BetEntity implements Serializable {
     private boolean isSettled;
 
     protected BetEntity() {
+    }
+
+    public BetEntity(final UUID betId, final BigDecimal betAmount, final UUID eventId, final UUID eventMarketId,
+                     final UUID eventWinnerId, final UUID userId, final boolean isSettled) {
+        this.betId = betId;
+        this.betAmount = betAmount;
+        this.eventId = eventId;
+        this.eventMarketId = eventMarketId;
+        this.eventWinnerId = eventWinnerId;
+        this.userId = userId;
+        this.isSettled = isSettled;
     }
 
     public BetEntity settled() {

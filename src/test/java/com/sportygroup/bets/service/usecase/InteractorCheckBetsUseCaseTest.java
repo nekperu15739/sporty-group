@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static com.sportygroup.bets.config.TopicConstant.BET_SETTLEMENTS_TOPIC;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -47,7 +48,8 @@ class InteractorCheckBetsUseCaseTest {
 
         doNothing().when(rocketMQTemplate).convertAndSend(eq(BET_SETTLEMENTS_TOPIC), any(Bet.class));
 
-        useCase.lookBetForWinners(eventResource);
+        assertThatCode(() -> useCase.lookBetForWinners(eventResource))
+            .doesNotThrowAnyException();
 
         verify(repository).findBetEntitiesByEventIdAndEventWinnerId(eventResource.getId(), eventResource.getWinnerId());
     }

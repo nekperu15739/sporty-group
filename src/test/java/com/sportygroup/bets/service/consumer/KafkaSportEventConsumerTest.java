@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -27,7 +28,8 @@ class KafkaSportEventConsumerTest {
 
         doNothing().when(checkBetsUseCase).lookBetForWinners(sportEvent);
 
-        kafkaSportEventConsumer.consume(sportEvent);
+        assertThatCode(() -> kafkaSportEventConsumer.consume(sportEvent))
+            .doesNotThrowAnyException();
 
         verify(checkBetsUseCase).lookBetForWinners(sportEvent);
     }

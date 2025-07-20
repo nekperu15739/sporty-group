@@ -16,3 +16,28 @@ spring:
   h2:
     console:
       enabled: true
+  docker:
+    compose:
+      lifecycle-management: start_only
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'com.sportygroup.bets.api'
+
+
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: bets-producer-group
+
+
+logging:
+  level:
+    root: info
+    org.apache.rocketmq.spring.core: debug

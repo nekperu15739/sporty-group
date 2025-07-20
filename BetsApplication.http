@@ -1,0 +1,9 @@
+### Create Sport event With Bet winner
+POST http://127.0.0.1:8080/sport-event
+Content-Type: application/json
+
+{
+  "id": "14cb4507-acf3-4ce4-8a77-7c16a75cd108",
+  "name": "{{$random.alphabetic(10)}}",
+  "winnerId": "afac9201-4bcf-45aa-95c4-75740458ba53"
+}
